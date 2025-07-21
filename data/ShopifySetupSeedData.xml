@@ -718,4 +718,19 @@ under the License.
             consumeServiceName="">
         <parameters parameterName="consumeSmrId" parameterValue=""/>
     </moqui.service.message.SystemMessageType>
+
+    <!-- SystemMessageType record for bulk product updates from Shopify -->
+    <moqui.service.message.SystemMessageType systemMessageTypeId="BulkProductAndVariantsByIdQuery"
+                                             description="Bulk Product and Variants By Id Query System Message"
+                                             parentTypeId="ShopifyBulkQuery"
+                                             sendServiceName="co.hotwax.shopify.system.ShopifySystemMessageServices.send#BulkQuerySystemMessage"
+                                             sendPath="dbresource://shopify/template/graphQL/BulkProductAndVariantsByIdQuery.ftl"
+                                             consumeServiceName="co.hotwax.shopify.system.ShopifySystemMessageServices.consume#BulkOperationResult"
+                                             receivePath="${contentRoot}/shopify/BulkProductAndVariantsByIdQuery/BulkOperationResult-${systemMessageId}-${remoteMessageId}-${nowDate}.jsonl">
+        <parameters parameterName="consumeSmrId" parameterValue="" systemMessageRemoteId=""/>
+    </moqui.service.message.SystemMessageType>
+
+    <moqui.basic.Enumeration description="Products Updates Feed" enumId="ProductUpdatesFeedNew" enumTypeId="OMSMessageTypeEnum"/>
+    <moqui.basic.Enumeration description="Generate OMS Update Products Feed" enumId="GenerateOMSUpdateProductsFeedNew" enumTypeId="SOBMessageTypeEnum" relatedEnumId="ProductUpdatesFeedNew" relatedEnumTypeId="OMSMessageTypeEnum"/>
+    <moqui.basic.Enumeration description="Bulk Product Metafields Query" enumId="BulkProductAndVariantsByIdQuery" enumTypeId="ShopifyMessageTypeEnum" relatedEnumId="GenerateOMSUpdateProductsFeedNew" relatedEnumTypeId="ShopifyMessageTypeEnum"/>
 </entity-facade-xml>
